@@ -1,13 +1,13 @@
-<!-- OPTIMISATION : version nettoyée (HTML5) pour éviter les espaces blancs / débordements
-     Principales corrections :
-     - évite 100vw + marges négatives (source fréquente de scroll/espaces)
-     - utilise width:100% + overflow-x:clip
-     - neutralise marges par défaut du body et des sections
-     - gère correctement la nav fixe (padding-top sur wrapper, pas sur hero)
-     - sécurise l’iframe (display:block) et les éléments en position absolute
+<!-- VERSION CORRIGÉE : suppression des espaces (bas et côtés) + nav fixe propre + footer inclus
+     Corrections clés (par rapport à votre version problématique) :
+     1) SUPPRIME le couple 100vw + marges négatives (source très fréquente de "blanc"/scroll)
+     2) Réserve la hauteur de la nav fixe via padding-top sur #lavia-wrapper (et non sur le hero)
+     3) Reset minimal (html/body margin=0) + iframe/img display:block
+     4) Timeline : top/bottom plutôt que height:100% (parent sans hauteur explicite)
+     5) Neutralise marges finales involontaires (footer/dernier bloc)
 -->
 
-<!-- 1) RESSOURCES (à charger UNE seule fois par page) -->
+<!-- 1. CHARGEMENT DES RESSOURCES (à charger une seule fois par page) -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -28,19 +28,19 @@
 </script>
 
 <style>
-  /* 0. RESET MINIMAL POUR ÉVITER MARGES / ESPACES BLANCS */
+  /* 0) RESET MINIMAL (évite marges globales + espaces fantômes) */
   html, body { margin: 0; padding: 0; }
   img, svg, video, canvas, iframe { display: block; max-width: 100%; }
 
-  /* 1. CONTENEUR : éviter 100vw + marges négatives (cause fréquente de "blanc"/scroll)
-        -> width:100% suffit dans WordPress, et on coupe les débordements */
+  /* 1) CONTENEUR : PAS de 100vw + marges négatives (cause #1 des espaces/scroll)
+        -> width:100% + overflow-x:clip est plus robuste dans WordPress */
   #lavia-wrapper {
     font-family: 'Roboto', sans-serif;
     color: #262626;
     line-height: 1.5;
     width: 100%;
     box-sizing: border-box;
-    overflow-x: clip; /* mieux que hidden : coupe le débordement sans créer d’espace */
+    overflow-x: clip;
     background-color: #ffffff;
     position: relative;
   }
@@ -48,14 +48,14 @@
   #lavia-wrapper *::before,
   #lavia-wrapper *::after { box-sizing: inherit; }
 
-  /* 2. NAV FIXE : on réserve l’espace en haut du wrapper */
+  /* 2) NAV FIXE : réserver l’espace en haut (au lieu de padding-top dans le hero) */
   #lavia-wrapper { padding-top: 80px; }
   body.admin-bar #lavia-wrapper { padding-top: 112px; }
   @media screen and (max-width: 782px) {
     body.admin-bar #lavia-wrapper { padding-top: 126px; }
   }
 
-  /* 3. TYPO */
+  /* 3) TITRES */
   #lavia-wrapper h1,
   #lavia-wrapper h2,
   #lavia-wrapper h3,
@@ -86,7 +86,7 @@
 
   .lavia-accent-text { color: #ff5c37 !important; }
 
-  /* 4. HERO : on retire le padding-top (déjà géré par le wrapper) */
+  /* 4) HERO : plus de padding-top (déjà réservé par #lavia-wrapper) */
   .lavia-hero-section {
     position: relative !important;
     background-color: #171717 !important;
@@ -95,13 +95,12 @@
     display: flex !important;
     align-items: center !important;
     width: 100% !important;
-    padding: 60px 0; /* padding vertical stable */
+    padding: 60px 0;
   }
-
   .lavia-hero-bg,
   .lavia-hero-gradient {
     position: absolute;
-    inset: 0; /* remplace top/left/width/height */
+    inset: 0;
   }
   .lavia-hero-bg {
     background-image: url('https://lavialab.ca/wp-content/uploads/2026/01/fond1.png');
@@ -112,23 +111,19 @@
     z-index: 1;
   }
   .lavia-hero-gradient {
-    background: linear-gradient(to right,
-      rgba(23,23,23,0.95) 0%,
-      rgba(23,23,23,0.8) 50%,
-      rgba(23,23,23,0.6) 100%
-    );
+    background: linear-gradient(to right, rgba(23,23,23,0.95) 0%, rgba(23,23,23,0.8) 50%, rgba(23,23,23,0.6) 100%);
     z-index: 2;
   }
   .lavia-content-layer { position: relative; z-index: 10; width: 100%; }
 
-  /* 5. NAVIGATION FIXE */
+  /* 5) NAVIGATION FIXE */
   .lavia-nav-fixed {
     position: fixed !important;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 99999 !important;
-    background-color: rgba(255,255,255,0.95);
+    background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(5px);
     border-bottom: 1px solid #e5e5e5;
     height: 80px;
@@ -140,15 +135,19 @@
     height: 45px !important;
     width: auto !important;
     max-width: none !important;
+    display: block !important;
     margin: 0 !important;
     padding: 0 !important;
     border: none !important;
     box-shadow: none !important;
   }
 
-  #lavia-wrapper nav a { text-decoration: none !important; font-family: 'Roboto', sans-serif !important; }
+  #lavia-wrapper nav a {
+    text-decoration: none !important;
+    font-family: 'Roboto', sans-serif !important;
+  }
 
-  /* 6. BOUTONS */
+  /* 6) BOUTONS */
   .btn-lavia-primary {
     background-color: #ff5c37 !important;
     color: #ffffff !important;
@@ -175,23 +174,23 @@
   }
   .btn-lavia-secondary:hover { background-color: rgba(255,255,255,0.1) !important; color: #ffffff !important; }
 
-  /* Timeline */
+  /* 7) TIMELINE : éviter height:100% (parent sans hauteur) */
   .timeline-line {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     top: 0;
-    bottom: 0; /* évite height:100% si le parent n’a pas de height */
+    bottom: 0;
     width: 2px;
     background-color: #e5e5e5;
   }
 
-  /* 7. DERNIER ÉLÉMENT : supprime la marge/padding final involontaire */
+  /* 8) FIN DE PAGE : éviter espaces bas causés par marges/padding par défaut */
+  #lavia-wrapper footer { margin: 0; }
   #lavia-wrapper > :last-child { margin-bottom: 0 !important; }
-  #lavia-wrapper section:last-of-type { padding-bottom: 0; }
 </style>
 
-<!-- CONTENEUR PRINCIPAL -->
+<!-- CONTENEUR PRINCIPAL AVEC ID UNIQUE 'lavia-wrapper' -->
 <div id="lavia-wrapper">
 
   <!-- Navigation -->
@@ -213,7 +212,7 @@
         </div>
 
         <div class="md:hidden flex items-center">
-          <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-neutral-600 p-2 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false">
+          <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-neutral-600 p-2 focus:outline-none" aria-controls="mobile-menu">
             <i class="fa-solid fa-bars text-2xl"></i>
           </button>
         </div>
@@ -249,12 +248,8 @@
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="#inscription" class="btn-lavia-primary px-6 py-3.5 text-base font-medium rounded md:text-lg shadow-lg uppercase tracking-wide">
-            Inscrire mon équipe
-          </a>
-          <a href="#processus" class="btn-lavia-secondary px-6 py-3.5 text-base font-medium rounded md:text-lg">
-            Voir le déroulement
-          </a>
+          <a href="#inscription" class="btn-lavia-primary px-6 py-3.5 text-base font-medium rounded md:text-lg shadow-lg uppercase tracking-wide">Inscrire mon équipe</a>
+          <a href="#processus" class="btn-lavia-secondary px-6 py-3.5 text-base font-medium rounded md:text-lg">Voir le déroulement</a>
         </div>
       </div>
     </div>
@@ -465,28 +460,13 @@
         <div>
           <h2 class="text-3xl font-bold text-white mb-6" style="color:#ffffff !important;">Qui peut participer ?</h2>
           <div class="space-y-6">
-            <div class="flex">
-              <i class="fa-solid fa-user-graduate text-xl pt-1 mr-4" style="color:#ff5c37;"></i>
-              <div>
-                <h4 class="text-lg font-semibold text-white">Étudiants</h4>
-                <p class="text-neutral-400 text-sm" style="color:#a3a3a3;">Universitaires et Collégiaux.</p>
-              </div>
-            </div>
-            <div class="flex">
-              <i class="fa-solid fa-chalkboard-teacher text-xl pt-1 mr-4" style="color:#ff5c37;"></i>
-              <div>
-                <h4 class="text-lg font-semibold text-white">Enseignants & Pros</h4>
-                <p class="text-neutral-400 text-sm" style="color:#a3a3a3;">Pour valider les besoins.</p>
-              </div>
-            </div>
+            <div class="flex"><i class="fa-solid fa-user-graduate text-xl pt-1 mr-4" style="color:#ff5c37;"></i><div><h4 class="text-lg font-semibold text-white">Étudiants</h4><p class="text-neutral-400 text-sm" style="color:#a3a3a3;">Universitaires et Collégiaux.</p></div></div>
+            <div class="flex"><i class="fa-solid fa-chalkboard-teacher text-xl pt-1 mr-4" style="color:#ff5c37;"></i><div><h4 class="text-lg font-semibold text-white">Enseignants & Pros</h4><p class="text-neutral-400 text-sm" style="color:#a3a3a3;">Pour valider les besoins.</p></div></div>
           </div>
         </div>
-
         <div class="bg-white text-neutral-800 rounded p-8 shadow-xl">
           <h3 class="text-2xl font-bold mb-4">Réserver votre place</h3>
           <p class="text-neutral-600 mb-6 text-sm">Les places sont limitées. Cliquez ci-dessous pour accéder au formulaire d'inscription officiel.</p>
-
-          <!-- Remplacer onclick/alert par un vrai href dès que prêt -->
           <a href="#" onclick="alert('Le lien d\'inscription sera disponible bientôt.'); return false;" class="block w-full text-center text-white font-bold py-3 px-4 rounded uppercase tracking-wide transition-all hover:bg-lavia-dark btn-lavia-primary">
             Commencer l'inscription
           </a>
@@ -494,5 +474,10 @@
       </div>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer class="bg-neutral-900 border-t border-neutral-800 py-12 text-center" style="background-color:#171717; border-top-color:#262626;">
+    <p class="text-sm text-neutral-500" style="margin:0;">© 2026 LAVIA. Tous droits réservés.</p>
+  </footer>
 
 </div>
