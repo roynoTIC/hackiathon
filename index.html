@@ -1,203 +1,301 @@
-<!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hack-IA-thon LAVIA 2026</title>
-    <meta name="description" content="Le premier hackathon sur l’intelligence artificielle générative en enseignement supérieur.">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- 1. CHARGEMENT DES RESSOURCES -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
-    <!-- Google Fonts: Roboto (Brand Compliance) -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        lavia: {
-                            orange: '#ff5c37', // Updated Brand Color
-                            dark: '#c43c1e',   // Darker shade of brand orange
-                        },
-                        // Using Neutral grays to avoid Navy/Blue tints
-                        neutral: {
-                            50: '#fafafa',
-                            100: '#f5f5f5',
-                            800: '#262626',
-                            900: '#171717',
-                            950: '#0a0a0a',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Roboto', 'sans-serif'], // Updated Font
-                    }
-                }
+<script>
+    tailwind.config = {
+        important: '#lavia-wrapper', /* Force Tailwind à être prioritaire dans ce conteneur */
+        theme: {
+            extend: {
+                colors: {
+                    lavia: { orange: '#ff5c37', dark: '#c43c1e' },
+                    neutral: { 50: '#fafafa', 100: '#f5f5f5', 800: '#262626', 900: '#171717' }
+                },
+                fontFamily: { sans: ['Roboto', 'sans-serif'] }
             }
         }
-    </script>
-    <style>
-        /* Custom styles */
-        body {
-            font-family: 'Roboto', sans-serif;
-            color: #262626; /* neutral-800 */
-        }
-        h1, h2, h3, h4, h5, h6 {
-            color: #171717; /* neutral-900 */
-        }
-        /* Removed underlines under titles as requested */
-        .section-title {
-            margin-bottom: 2rem;
-        }
-        
-        /* Dynamic gradient for Hero text legibility */
-        .hero-gradient {
-            background: linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(23,23,23,0.8) 50%, rgba(23,23,23,0.4) 100%);
-        }
-    </style>
-</head>
-<body class="bg-white text-neutral-800 antialiased">
+    }
+</script>
+
+<style>
+    /* --- ISOLATION ET PRIORITÉ MAXIMALE --- */
+    
+    /* 1. Reset local pour le conteneur principal */
+    #lavia-wrapper {
+        font-family: 'Roboto', sans-serif;
+        color: #262626;
+        line-height: 1.5;
+        width: 100vw; /* Force la pleine largeur écran */
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        background-color: #ffffff;
+        z-index: 1; /* S'assure d'être au bon niveau */
+    }
+
+    /* 2. Reset des titres pour ce conteneur uniquement */
+    #lavia-wrapper h1, 
+    #lavia-wrapper h2, 
+    #lavia-wrapper h3, 
+    #lavia-wrapper h4, 
+    #lavia-wrapper h5, 
+    #lavia-wrapper h6 { 
+        color: #171717 !important; 
+        margin-top: 0;
+        margin-bottom: 0.5em;
+        line-height: 1.2;
+        font-weight: 700;
+    }
+    
+    /* 3. CORRECTION SPECIFIQUE DU TITRE HERO (BLANC) */
+    /* Utilisation de l'ID parent pour augmenter la spécificité */
+    #lavia-wrapper .lavia-hero-section h1.lavia-hero-title { 
+        color: #ffffff !important; 
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Ajout d'ombre pour lisibilité */
+    }
+    
+    /* Tailles du titre Hero */
+    #lavia-wrapper .lavia-hero-title { font-size: 3rem !important; }
+    @media (min-width: 768px) { #lavia-wrapper .lavia-hero-title { font-size: 4.5rem !important; } }
+    @media (min-width: 1024px) { #lavia-wrapper .lavia-hero-title { font-size: 6rem !important; } }
+    
+    /* Sous-titre Hero */
+    #lavia-wrapper .lavia-hero-subtitle { 
+        color: #e5e5e5 !important; 
+        font-size: 1.15rem !important; 
+        font-weight: 300 !important;
+    }
+    @media (min-width: 768px) { #lavia-wrapper .lavia-hero-subtitle { font-size: 1.5rem !important; } }
+    
+    /* Texte accent orange */
+    .lavia-accent-text { color: #ff5c37 !important; }
+    
+    /* 4. HERO SECTION ROBUSTE */
+    .lavia-hero-section {
+        position: relative !important;
+        background-color: #171717 !important;
+        overflow: hidden !important;
+        min-height: 70vh !important;
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        padding-top: 80px; /* Espace pour le menu fixe */
+        padding-bottom: 60px;
+    }
+    
+    /* Image de fond */
+    .lavia-hero-bg {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: url('https://lavialab.ca/wp-content/uploads/2026/01/fond1.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.6 !important;
+        z-index: 1;
+    }
+
+    /* Dégradé de fond */
+    .lavia-hero-gradient {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(to right, rgba(23,23,23,0.95) 0%, rgba(23,23,23,0.8) 50%, rgba(23,23,23,0.6) 100%);
+        z-index: 2;
+    }
+    
+    /* Contenu Hero */
+    .lavia-content-layer {
+        position: relative;
+        z-index: 10; 
+        width: 100%;
+    }
+
+    /* 5. NAVIGATION FIXE */
+    .lavia-nav-fixed {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 99999 !important; /* Très haut */
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(5px);
+        border-bottom: 1px solid #e5e5e5;
+        height: 80px; /* Hauteur fixe */
+    }
+    
+    /* Ajustement pour la barre Admin WordPress */
+    body.admin-bar .lavia-nav-fixed { top: 32px !important; }
+    @media screen and (max-width: 782px) { body.admin-bar .lavia-nav-fixed { top: 46px !important; } }
+
+    /* Logo dans la nav */
+    .lavia-logo-img {
+        height: 45px !important;
+        width: auto !important;
+        max-width: none !important; /* Enlève limite du thème */
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Liens Navigation */
+    #lavia-wrapper nav a {
+        text-decoration: none !important;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    /* 6. BOUTONS */
+    .btn-lavia-primary {
+        background-color: #ff5c37 !important;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        border: none !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease !important;
+    }
+    .btn-lavia-primary:hover {
+        background-color: #c43c1e !important;
+        color: #ffffff !important;
+    }
+    
+    .btn-lavia-secondary {
+        border: 1px solid #a3a3a3 !important;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        background-color: transparent !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease !important;
+    }
+    .btn-lavia-secondary:hover {
+        background-color: rgba(255,255,255,0.1) !important;
+        color: #ffffff !important;
+    }
+    
+    /* Timeline */
+    .timeline-line {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
+        width: 2px;
+        background-color: #e5e5e5;
+    }
+    
+</style>
+
+<!-- CONTENEUR PRINCIPAL AVEC ID UNIQUE 'lavia-wrapper' -->
+<div id="lavia-wrapper">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-neutral-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
+    <nav class="lavia-nav-fixed flex items-center">
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-full">
+                <!-- LOGO -->
                 <div class="flex-shrink-0 flex items-center">
-                    <!-- Logo Integration -->
-                    <!-- Note: Replace src with your local file path 'LAVIA_logo_noir_2pixel@2x.png' when hosting -->
-                    <img src="https://via.placeholder.com/150x50/ffffff/000000?text=LAVIA+LOGO" alt="Logo LAVIA" class="h-10 w-auto object-contain">
+                    <img src="https://lavialab.ca/wp-content/uploads/2026/01/LAVIA_logo_noir_2pixel@2x.png" alt="Logo LAVIA" class="lavia-logo-img">
                 </div>
-                <div class="hidden md:flex space-x-8 items-center">
+                
+                <!-- MENU DESKTOP -->
+                <div class="hidden md:flex space-x-8 items-center h-full">
                     <a href="#a-propos" class="text-sm font-medium text-neutral-600 hover:text-lavia-orange transition-colors">À propos</a>
-                    <a href="#thematiques" class="text-sm font-medium text-neutral-600 hover:text-lavia-orange transition-colors">Thématiques</a>
-                    <a href="#programme" class="text-sm font-medium text-neutral-600 hover:text-lavia-orange transition-colors">Programme</a>
-                    <a href="#partenaires" class="text-sm font-medium text-neutral-600 hover:text-lavia-orange transition-colors">Partenaires</a>
-                    <a href="#faq" class="text-sm font-medium text-neutral-600 hover:text-lavia-orange transition-colors">FAQ</a>
-                    <a href="#inscription" class="px-5 py-2.5 bg-lavia-orange text-white text-sm font-medium rounded hover:bg-lavia-dark transition-colors shadow-sm uppercase tracking-wide">
+                    <a href="#processus" class="text-sm font-medium text-neutral-600 hover:text-lavia-orange transition-colors">Le Concours</a>
+                    <a href="#prix" class="text-sm font-medium text-neutral-600 hover:text-lavia-orange transition-colors">Prix</a>
+                    <a href="#infos-pratiques" class="text-sm font-medium text-neutral-600 hover:text-lavia-orange transition-colors">Lieu & Infos</a>
+                    <a href="#inscription" class="px-5 py-2.5 bg-lavia-orange text-white text-sm font-medium rounded hover:bg-lavia-dark transition-colors shadow-sm uppercase tracking-wide btn-lavia-primary">
                         S'inscrire
                     </a>
                 </div>
-                <!-- Mobile menu button -->
+                
+                <!-- MENU MOBILE BURGER -->
                 <div class="md:hidden flex items-center">
-                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-neutral-600 hover:text-neutral-900 focus:outline-none p-2">
-                        <i class="fa-solid fa-bars text-xl"></i>
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-neutral-600 p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-neutral-100">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#a-propos" class="block px-3 py-2 text-base font-medium text-neutral-600 hover:text-lavia-orange hover:bg-neutral-50 rounded-md">À propos</a>
-                <a href="#thematiques" class="block px-3 py-2 text-base font-medium text-neutral-600 hover:text-lavia-orange hover:bg-neutral-50 rounded-md">Thématiques</a>
-                <a href="#programme" class="block px-3 py-2 text-base font-medium text-neutral-600 hover:text-lavia-orange hover:bg-neutral-50 rounded-md">Programme</a>
-                <a href="#inscription" class="block px-3 py-2 text-base font-medium text-lavia-orange font-bold hover:bg-neutral-50 rounded-md">S'inscrire</a>
-            </div>
+        
+        <!-- MOBILE MENU DROPDOWN -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white border-t border-neutral-100 p-4 shadow-lg md:hidden">
+             <a href="#a-propos" class="block py-3 text-neutral-600 border-b border-neutral-100">À propos</a>
+             <a href="#processus" class="block py-3 text-neutral-600 border-b border-neutral-100">Le Concours</a>
+             <a href="#infos-pratiques" class="block py-3 text-neutral-600 border-b border-neutral-100">Infos Pratiques</a>
+             <a href="#inscription" class="block py-3 mt-2 text-lavia-orange font-bold">S'inscrire</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-neutral-900 overflow-hidden">
-        <!-- Background Overlay - More dynamic image -->
-        <div class="absolute inset-0 z-0">
-             <!-- Using a more collaborative/dynamic image instead of abstract tech -->
-             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Collaboration étudiante" class="w-full h-full object-cover opacity-30">
-             <div class="absolute inset-0 hero-gradient"></div>
-        </div>
-
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="lavia-hero-section">
+        <!-- Image de fond et Gradient (séparés pour contrôle total) -->
+        <div class="lavia-hero-bg"></div>
+        <div class="lavia-hero-gradient"></div>
+        
+        <div class="lavia-content-layer max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl">
-                <div class="inline-flex items-center px-3 py-1 rounded border border-lavia-orange/30 bg-lavia-orange/10 text-lavia-orange text-sm font-medium mb-6">
-                    <span class="flex h-2 w-2 rounded-full bg-lavia-orange mr-2"></span>
+                <!-- Badge -->
+                <div class="inline-flex items-center px-3 py-1 rounded border border-lavia-orange/30 bg-lavia-orange/10 text-lavia-orange text-sm font-medium mb-4" style="color: #ff5c37 !important; border-color: rgba(255,92,55,0.3) !important;">
+                    <span class="flex h-2 w-2 rounded-full bg-lavia-orange mr-2" style="background-color: #ff5c37 !important;"></span>
                     20 et 21 mars 2026 • Campus Brossard
                 </div>
-                <!-- Cleaned up title typography -->
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6 tracking-tight">
-                    HACK<span class="text-lavia-orange">IA</span>THON <br>LAVIA
+                
+                <!-- TITRE HERO -->
+                <h1 class="lavia-hero-title mb-4 leading-tight">
+                    HACK<span class="lavia-accent-text">IA</span>THON <br>LAVIA
                 </h1>
-                <p class="text-xl text-neutral-300 mb-8 font-light leading-relaxed">
+                
+                <!-- SOUS-TITRE -->
+                <p class="lavia-hero-subtitle mb-8 leading-relaxed">
                     Transformons et propulsons l’enseignement et l’apprentissage par des outils d’intelligence artificielle générative structurants, innovants, éthiques et inclusifs.
                 </p>
+                
+                <!-- BOUTONS -->
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#inscription" class="inline-flex justify-center items-center px-8 py-3.5 border border-transparent text-base font-medium rounded bg-lavia-orange text-white hover:bg-lavia-dark md:text-lg transition-all shadow-lg hover:shadow-lavia-orange/20 uppercase tracking-wide">
+                    <a href="#inscription" class="btn-lavia-primary px-6 py-3.5 text-base font-medium rounded md:text-lg shadow-lg uppercase tracking-wide">
                         Inscrire mon équipe
                     </a>
-                    <a href="#a-propos" class="inline-flex justify-center items-center px-8 py-3.5 border border-neutral-600 text-base font-medium rounded text-white hover:bg-neutral-800 md:text-lg transition-all">
-                        En savoir plus
+                    <a href="#processus" class="btn-lavia-secondary px-6 py-3.5 text-base font-medium rounded md:text-lg">
+                        Voir le déroulement
                     </a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- À propos / Objectifs -->
+    <!-- À propos -->
     <section id="a-propos" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                 <div>
-                    <h2 class="text-3xl font-bold text-neutral-900 section-title">Le contexte</h2>
-                    <p class="text-lg text-neutral-600 mb-6 leading-relaxed">
-                        Le LAVIA et ses partenaires organisent le premier hackathon sur l’intelligence artificielle générative (IAg) dédié spécifiquement à l'enseignement supérieur.
-                    </p>
-                    <p class="text-neutral-600 mb-6 leading-relaxed">
-                        Cet événement vise à développer des prototypes fonctionnels d’algorithmes d’IA qui seront non seulement utiles, mais aussi <strong>éthiques et responsables</strong>. Nous souhaitons explorer comment l'IA peut soutenir concrètement les enseignants, les étudiants et les processus administratifs.
-                    </p>
-                    
+                    <h2 class="text-3xl font-bold mb-8">Le contexte</h2>
+                    <p class="text-lg text-neutral-600 mb-6 leading-relaxed">Le LAVIA et ses partenaires organisent le premier hackathon sur l’intelligence artificielle générative (IAg) dédié spécifiquement à l'enseignement supérieur.</p>
                     <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div class="flex items-start">
-                            <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded bg-lavia-orange/10 text-lavia-orange">
-                                    <i class="fa-solid fa-users text-xl"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-medium text-neutral-900">Collaboration</h3>
-                                <p class="mt-1 text-sm text-neutral-500">Équipes interdisciplinaires étudiants-professionnels.</p>
-                            </div>
+                            <i class="fa-solid fa-users text-xl mt-1 mr-4" style="color: #ff5c37;"></i>
+                            <div><h3 class="text-lg font-medium text-neutral-900 mb-1">Collaboration</h3><p class="text-sm text-neutral-500">Équipes interdisciplinaires.</p></div>
                         </div>
                         <div class="flex items-start">
-                            <div class="flex-shrink-0">
-                                <div class="flex items-center justify-center h-12 w-12 rounded bg-lavia-orange/10 text-lavia-orange">
-                                    <i class="fa-solid fa-lightbulb text-xl"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="text-lg font-medium text-neutral-900">Innovation</h3>
-                                <p class="mt-1 text-sm text-neutral-500">Solutions IAg concrètes pour l'éducation.</p>
-                            </div>
+                            <i class="fa-solid fa-lightbulb text-xl mt-1 mr-4" style="color: #ff5c37;"></i>
+                            <div><h3 class="text-lg font-medium text-neutral-900 mb-1">Innovation</h3><p class="text-sm text-neutral-500">Solutions concrètes.</p></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="bg-neutral-50 p-8 rounded border border-neutral-100 shadow-sm">
                     <h3 class="text-xl font-bold text-neutral-900 mb-6">Informations clés</h3>
-                    <ul class="space-y-4">
-                        <li class="flex items-start">
-                            <i class="fa-regular fa-calendar-check mt-1 text-lavia-orange w-6"></i>
-                            <div>
-                                <span class="block font-semibold text-neutral-900">Dates principales</span>
-                                <span class="text-neutral-600">20 et 21 mars 2026</span>
-                                <span class="text-sm text-neutral-500 block mt-1">Préparation virtuelle en janv/fév 2026</span>
-                            </div>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fa-solid fa-location-dot mt-1 text-lavia-orange w-6"></i>
-                            <div>
-                                <span class="block font-semibold text-neutral-900">Lieu</span>
-                                <span class="text-neutral-600">Campus Brossard de l’Université de Montréal</span>
-                            </div>
-                        </li>
-                         <li class="flex items-start">
-                            <i class="fa-solid fa-globe mt-1 text-lavia-orange w-6"></i>
-                            <div>
-                                <span class="block font-semibold text-neutral-900">Format</span>
-                                <span class="text-neutral-600">Hybride (Préparation virtuelle + Finale présentielle)</span>
-                            </div>
-                        </li>
+                    <ul class="space-y-4 list-none pl-0 m-0">
+                        <li class="flex items-start"><i class="fa-regular fa-calendar-check mt-1 w-6 flex-shrink-0" style="color: #ff5c37;"></i><div><span class="block font-semibold text-neutral-900">Dates</span><span class="text-neutral-600">20 et 21 mars 2026</span></div></li>
+                        <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 w-6 flex-shrink-0" style="color: #ff5c37;"></i><div><span class="block font-semibold text-neutral-900">Lieu</span><span class="text-neutral-600">Campus Brossard, UdeM</span></div></li>
                     </ul>
                 </div>
             </div>
@@ -210,102 +308,74 @@
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-neutral-900 mb-4">Les défis à relever</h2>
                 <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
-                    Les équipes concourront dans l'une des deux catégories suivantes pour proposer des cas d'usage pertinents.
+                    Les équipes concourront dans l'une des deux catégories suivantes.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white rounded p-8 shadow-sm border-t-4" style="border-top-color: #ff5c37;">
+                    <i class="fa-solid fa-graduation-cap text-3xl mb-4" style="color: #ff5c37;"></i>
+                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">Accompagnement des étudiants</h3>
+                    <ul class="space-y-2 text-sm text-neutral-600 list-none pl-0">
+                        <li>• Tutorat & FAQ</li><li>• Préparation aux examens</li><li>• Besoins particuliers (EHG)</li>
+                    </ul>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white rounded p-8 shadow-sm border-t-4 border-neutral-800">
+                    <i class="fa-solid fa-chalkboard-user text-3xl mb-4 text-neutral-800"></i>
+                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">Soutien aux enseignants</h3>
+                    <ul class="space-y-2 text-sm text-neutral-600 list-none pl-0">
+                        <li>• Plans de cours & leçons</li><li>• Contenus multimédias</li><li>• Correction & Rétroaction</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESSUS -->
+    <section id="processus" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-lavia-orange font-bold uppercase tracking-wider text-sm block mb-2" style="color: #ff5c37;">Le parcours</span>
+                <h2 class="text-3xl font-bold text-neutral-900 mb-4">Deux étapes vers la victoire</h2>
+                <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
+                    Le hackathon se déroule en deux temps forts.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-white rounded p-8 shadow-sm border-t-4 border-lavia-orange hover:shadow-md transition-shadow">
-                    <div class="h-14 w-14 bg-orange-50 rounded-full flex items-center justify-center mb-6">
-                        <i class="fa-solid fa-graduation-cap text-2xl text-lavia-orange"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">Accompagnement des étudiants</h3>
-                    <p class="text-neutral-600 mb-6">
-                        Solutions visant le soutien à la motivation, à l’apprentissage ou à la réussite.
-                    </p>
-                    <ul class="space-y-2 text-sm text-neutral-600 mb-6">
-                        <li class="flex items-center"><i class="fa-solid fa-check text-lavia-orange mr-2"></i> Tutorat individuel & FAQ</li>
-                        <li class="flex items-center"><i class="fa-solid fa-check text-lavia-orange mr-2"></i> Préparation aux examens</li>
-                        <li class="flex items-center"><i class="fa-solid fa-check text-lavia-orange mr-2"></i> Soutien aux besoins particuliers (EHG)</li>
-                        <li class="flex items-center"><i class="fa-solid fa-check text-lavia-orange mr-2"></i> Apprentissage expérientiel</li>
-                    </ul>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-white rounded p-8 shadow-sm border-t-4 border-neutral-800 hover:shadow-md transition-shadow">
-                    <div class="h-14 w-14 bg-neutral-100 rounded-full flex items-center justify-center mb-6">
-                        <i class="fa-solid fa-chalkboard-user text-2xl text-neutral-800"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-neutral-900 mb-4">Soutien aux enseignants</h3>
-                    <p class="text-neutral-600 mb-6">
-                        Outils pour la planification, la conception, l'enseignement et l'évaluation.
-                    </p>
-                    <ul class="space-y-2 text-sm text-neutral-600 mb-6">
-                        <li class="flex items-center"><i class="fa-solid fa-check text-neutral-800 mr-2"></i> Génération de plans de cours & leçons</li>
-                        <li class="flex items-center"><i class="fa-solid fa-check text-neutral-800 mr-2"></i> Création de contenus multimédias (quiz, vidéos)</li>
-                        <li class="flex items-center"><i class="fa-solid fa-check text-neutral-800 mr-2"></i> Adaptation de matériel pédagogique</li>
-                        <li class="flex items-center"><i class="fa-solid fa-check text-neutral-800 mr-2"></i> Aide à la correction et rétroaction</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Programme -->
-    <section id="programme" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-neutral-900 section-title mb-12">Le parcours</h2>
-            
             <div class="relative">
-                <!-- Timeline Line -->
-                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-neutral-200"></div>
+                <div class="hidden md:block timeline-line"></div>
 
-                <div class="space-y-12">
-                    <!-- Phase 1 -->
-                    <div class="relative flex flex-col md:flex-row items-center justify-between">
-                        <div class="flex-1 w-full md:pr-10 md:text-right">
-                            <h3 class="text-xl font-bold text-neutral-900">Janvier - Février 2026</h3>
-                            <p class="text-lavia-orange font-medium mb-2 uppercase text-sm tracking-wide">Préparation virtuelle</p>
-                            <p class="text-neutral-600 text-sm">Soumission des idées, formation des équipes et présélection des projets.</p>
+                <div class="space-y-16">
+                    <!-- Step 1 -->
+                    <div class="relative flex flex-col md:flex-row items-center">
+                        <div class="flex-1 w-full md:pr-12 md:text-right">
+                            <div class="bg-neutral-50 p-6 rounded-lg border border-neutral-100 shadow-sm inline-block w-full text-left md:text-right">
+                                <span class="bg-lavia-orange text-white text-xs font-bold px-2 py-1 rounded mb-2 inline-block" style="background-color: #ff5c37;">JANVIER - FÉVRIER 2026</span>
+                                <h3 class="text-xl font-bold text-neutral-900 mb-2">1. La Qualification</h3>
+                                <p class="text-neutral-600 text-sm mb-3 font-bold">Convaincre le jury de la pertinence.</p>
+                                <p class="text-neutral-600 text-sm">
+                                    Soumettez votre idée en équipe. Le jury évaluera le scénario, la portée potentielle et l'originalité.
+                                </p>
+                            </div>
                         </div>
-                        <div class="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-white border-4 border-lavia-orange z-10 hidden md:flex"></div>
-                        <div class="flex-1 w-full md:pl-10 mt-4 md:mt-0">
-                            <!-- Empty for layout -->
-                        </div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-lavia-orange text-white font-bold z-10 hidden md:flex border-4 border-white shadow-sm" style="background-color: #ff5c37;">1</div>
+                        <div class="flex-1 w-full md:pl-12 mt-4 md:mt-0"></div>
                     </div>
 
-                    <!-- Phase 2 -->
-                    <div class="relative flex flex-col md:flex-row items-center justify-between">
-                        <div class="flex-1 w-full md:pr-10 md:text-right mt-4 md:mt-0 order-2 md:order-1">
-                             <!-- Empty for layout -->
-                        </div>
-                        <div class="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-neutral-900 border-4 border-neutral-900 z-10 hidden md:flex"></div>
-                         <div class="flex-1 w-full md:pl-10 order-1 md:order-2">
-                            <h3 class="text-xl font-bold text-neutral-900">20 Mars 2026</h3>
-                            <p class="text-lavia-orange font-medium mb-2 uppercase text-sm tracking-wide">Jour 1 : Lancement & Développement</p>
-                            <ul class="text-sm text-neutral-600 space-y-1">
-                                <li>• Ouverture officielle</li>
-                                <li>• Mentorat technique (AWS) et pédagogique</li>
-                                <li>• Développement intensif des prototypes</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Phase 3 -->
-                    <div class="relative flex flex-col md:flex-row items-center justify-between">
-                        <div class="flex-1 w-full md:pr-10 md:text-right">
-                            <h3 class="text-xl font-bold text-neutral-900">21 Mars 2026</h3>
-                            <p class="text-lavia-orange font-medium mb-2 uppercase text-sm tracking-wide">Jour 2 : Finalisation & Pitchs</p>
-                            <ul class="text-sm text-neutral-600 space-y-1">
-                                <li>• Finalisation des démos</li>
-                                <li>• Présentations devant jury</li>
-                                <li>• Remise des prix et clôture</li>
-                            </ul>
-                        </div>
-                        <div class="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-white border-4 border-lavia-orange z-10 hidden md:flex"></div>
-                         <div class="flex-1 w-full md:pl-10 mt-4 md:mt-0">
-                             <!-- Empty for layout -->
+                    <!-- Step 2 -->
+                    <div class="relative flex flex-col md:flex-row items-center">
+                        <div class="flex-1 w-full md:pr-12 md:text-right mt-4 md:mt-0 order-2 md:order-1"></div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-neutral-900 text-white font-bold z-10 hidden md:flex border-4 border-white shadow-sm">2</div>
+                        <div class="flex-1 w-full md:pl-12 order-1 md:order-2">
+                             <div class="bg-neutral-50 p-6 rounded-lg border border-neutral-100 shadow-sm inline-block w-full">
+                                <span class="bg-neutral-900 text-white text-xs font-bold px-2 py-1 rounded mb-2 inline-block">20 - 21 MARS 2026</span>
+                                <h3 class="text-xl font-bold text-neutral-900 mb-2">2. Le Hackathon sur place</h3>
+                                <p class="text-neutral-600 text-sm mb-3 font-bold">Le concours de développement.</p>
+                                <p class="text-neutral-600 text-sm">
+                                    48h pour transformer l'idée en prototype fonctionnel au Campus Brossard.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -313,232 +383,144 @@
         </div>
     </section>
 
-    <!-- Inscription & Public cible -->
-    <section id="inscription" class="py-20 bg-neutral-900 text-white">
+    <!-- PRIX -->
+    <section id="prix" class="py-20 bg-neutral-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-neutral-900 mb-4">Prix et Récompenses</h2>
+                <p class="text-neutral-600 max-w-2xl mx-auto">
+                    Plusieurs prix seront attribués pour souligner l'excellence.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Item Prix -->
+                <div class="bg-white p-6 rounded shadow-sm text-center border-t-4 border-lavia-orange" style="border-top-color: #ff5c37;">
+                    <i class="fa-solid fa-heart text-3xl mb-4" style="color: #ff5c37;"></i>
+                    <h3 class="font-bold text-lg text-neutral-900">Coup de Cœur</h3>
+                    <p class="text-sm text-neutral-500 mt-2">Du public ou du jury</p>
+                </div>
+                <!-- Item Prix -->
+                <div class="bg-white p-6 rounded shadow-sm text-center border-t-4 border-neutral-800">
+                    <i class="fa-solid fa-users-viewfinder text-3xl text-neutral-800 mb-4"></i>
+                    <h3 class="font-bold text-lg text-neutral-900">Prix EDI</h3>
+                    <p class="text-sm text-neutral-500 mt-2">Équité, Diversité et Inclusion</p>
+                </div>
+                <!-- Item Prix -->
+                <div class="bg-white p-6 rounded shadow-sm text-center border-t-4 border-lavia-orange" style="border-top-color: #ff5c37;">
+                    <i class="fa-solid fa-rocket text-3xl mb-4" style="color: #ff5c37;"></i>
+                    <h3 class="font-bold text-lg text-neutral-900">Prix Voir Grand</h3>
+                    <p class="text-sm text-neutral-500 mt-2">Vision et conception innovante</p>
+                </div>
+                <!-- Item Prix -->
+                <div class="bg-white p-6 rounded shadow-sm text-center border-t-4 border-neutral-800">
+                    <i class="fa-solid fa-graduation-cap text-3xl text-neutral-800 mb-4"></i>
+                    <h3 class="font-bold text-lg text-neutral-900">Prix Étudiant</h3>
+                    <p class="text-sm text-neutral-500 mt-2">Accompagnement et soutien à l'apprentissage</p>
+                </div>
+                <!-- Item Prix -->
+                <div class="bg-white p-6 rounded shadow-sm text-center border-t-4 border-lavia-orange" style="border-top-color: #ff5c37;">
+                    <i class="fa-solid fa-chalkboard-user text-3xl mb-4" style="color: #ff5c37;"></i>
+                    <h3 class="font-bold text-lg text-neutral-900">Prix Enseignant</h3>
+                    <p class="text-sm text-neutral-500 mt-2">Soutien aux tâches d'enseignement</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Infos Pratiques -->
+    <section id="infos-pratiques" class="py-20 bg-white border-t border-neutral-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-neutral-900 mb-4">Infos Pratiques & Logistique</h2>
+                <p class="text-xl text-neutral-600 max-w-2xl mx-auto">
+                    Tout est pensé pour que vous puissiez vous concentrer à 100% sur l'innovation.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <div class="flex items-center justify-center h-12 w-12 rounded bg-lavia-orange/10 text-lavia-orange">
+                                <i class="fa-solid fa-utensils text-xl" style="color: #ff5c37;"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-neutral-900">Repas inclus</h3>
+                            <p class="mt-2 text-neutral-600">Ne vous souciez pas de la logistique : les dîners (midis) et les pauses sont fournis gratuitement.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <div class="flex items-center justify-center h-12 w-12 rounded bg-lavia-orange/10 text-lavia-orange">
+                                <i class="fa-solid fa-tag text-xl" style="color: #ff5c37;"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-neutral-900">Inscription gratuite</h3>
+                            <p class="mt-2 text-neutral-600">Il n'y a aucuns frais d'entrée. L'événement est subventionné par nos partenaires.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <div class="flex items-center justify-center h-12 w-12 rounded bg-lavia-orange/10 text-lavia-orange">
+                                <i class="fa-solid fa-train-subway text-xl" style="color: #ff5c37;"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-neutral-900">Accès facile (REM)</h3>
+                            <p class="mt-2 text-neutral-600">
+                                Campus Brossard : Accès direct via le <strong>REM (Station Du Quartier)</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-100 p-2 rounded-lg shadow-inner h-80 lg:h-96 w-full">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2799.578672534578!2d-73.44755142385464!3d45.4379737710733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc905904ef228e5%3A0x6331003632906322!2sUniversit%C3%A9%20de%20Montr%C3%A9al%20-%20Campus%20de%20Brossard!5e0!3m2!1sfr!2sca!4v1709220000000!5m2!1sfr!2sca" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0; border-radius: 0.5rem;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inscription -->
+    <section id="inscription" class="py-20 bg-neutral-900" style="background-color: #171717;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
                 <div>
-                    <h2 class="text-3xl font-bold text-white mb-6">Qui peut participer ?</h2>
-                    <p class="text-neutral-400 mb-8">
-                        La formation d’équipes interdisciplinaires et interordres est fortement encouragée pour maximiser l'impact des solutions.
-                    </p>
-                    
+                    <h2 class="text-3xl font-bold text-white mb-6" style="color: #ffffff !important;">Qui peut participer ?</h2>
                     <div class="space-y-6">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fa-solid fa-user-graduate text-lavia-orange text-xl pt-1"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-semibold text-white">Étudiants</h4>
-                                <p class="text-neutral-400 text-sm">Universitaires (info, multimédia, éducation, sciences humaines) et Collégiaux (techniques info, multimédia).</p>
-                            </div>
-                        </div>
-                         <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fa-solid fa-chalkboard-teacher text-lavia-orange text-xl pt-1"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-semibold text-white">Enseignants & Professionnels</h4>
-                                <p class="text-neutral-400 text-sm">Pour proposer des cas d'utilisation, valider les besoins et agir comme personnes-ressources.</p>
-                            </div>
-                        </div>
-                         <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fa-solid fa-building-columns text-lavia-orange text-xl pt-1"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-semibold text-white">Cadres & Gestionnaires</h4>
-                                <p class="text-neutral-400 text-sm">Directions d'établissement, vice-doyens intéressés par l'innovation administrative.</p>
-                            </div>
-                        </div>
+                        <div class="flex"><i class="fa-solid fa-user-graduate text-xl pt-1 mr-4" style="color: #ff5c37;"></i><div><h4 class="text-lg font-semibold text-white">Étudiants</h4><p class="text-neutral-400 text-sm" style="color: #a3a3a3;">Universitaires et Collégiaux.</p></div></div>
+                        <div class="flex"><i class="fa-solid fa-chalkboard-teacher text-xl pt-1 mr-4" style="color: #ff5c37;"></i><div><h4 class="text-lg font-semibold text-white">Enseignants & Pros</h4><p class="text-neutral-400 text-sm" style="color: #a3a3a3;">Pour valider les besoins.</p></div></div>
                     </div>
                 </div>
-
                 <div class="bg-white text-neutral-800 rounded p-8 shadow-xl">
                     <h3 class="text-2xl font-bold mb-4">Réserver votre place</h3>
                     <p class="text-neutral-600 mb-6 text-sm">
-                        L'événement est bilingue (français et anglais). En vous inscrivant, vous acceptez les conditions de participation (captation vidéo/photo).
+                        Les places sont limitées. Cliquez ci-dessous pour accéder au formulaire d'inscription officiel.
                     </p>
-                    <form onsubmit="event.preventDefault(); alert('Ceci est une maquette. Le formulaire sera connecté ultérieurement.');">
-                        <div class="grid grid-cols-1 gap-4 mb-4">
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-neutral-700 mb-1">Courriel institutionnel</label>
-                                <input type="email" id="email" class="w-full px-4 py-2 border border-neutral-300 rounded focus:ring-2 focus:ring-lavia-orange focus:border-lavia-orange outline-none" placeholder="exemple@umontreal.ca">
-                            </div>
-                            <div>
-                                <label for="role" class="block text-sm font-medium text-neutral-700 mb-1">Je suis</label>
-                                <select id="role" class="w-full px-4 py-2 border border-neutral-300 rounded focus:ring-2 focus:ring-lavia-orange focus:border-lavia-orange outline-none bg-white">
-                                    <option>Étudiant(e)</option>
-                                    <option>Enseignant(e)</option>
-                                    <option>Professionnel(le)</option>
-                                    <option>Autre</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="submit" class="w-full bg-lavia-orange text-white font-bold py-3 px-4 rounded hover:bg-lavia-dark transition-colors uppercase tracking-wide">
-                            Commencer l'inscription
-                        </button>
-                    </form>
+                    <a href="#" onclick="alert('Le lien d\'inscription sera disponible bientôt.'); return false;" class="block w-full text-center text-white font-bold py-3 px-4 rounded uppercase tracking-wide transition-all hover:bg-lavia-dark btn-lavia-primary">
+                        Commencer l'inscription
+                    </a>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Jury & Prix -->
-    <section class="py-20 bg-neutral-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16 text-center">
-                <h2 class="text-3xl font-bold text-neutral-900 mb-4">Critères et récompenses</h2>
-                <p class="text-neutral-600 max-w-2xl mx-auto">
-                    Les projets seront évalués sur leur scénario, leur portée, leur originalité et la qualité de la démo fonctionnelle.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Prix List -->
-                <div class="md:col-span-2 bg-white p-8 rounded shadow-sm">
-                    <h3 class="text-xl font-bold text-neutral-900 mb-6 flex items-center">
-                        <i class="fa-solid fa-trophy text-lavia-orange mr-3"></i> Catégories de prix
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="p-4 bg-neutral-50 rounded border-l-4 border-lavia-orange">
-                            <span class="font-semibold block text-neutral-900">Coup de cœur</span>
-                            <span class="text-sm text-neutral-500">Du public ou du jury</span>
-                        </div>
-                        <div class="p-4 bg-neutral-50 rounded border-l-4 border-lavia-orange">
-                            <span class="font-semibold block text-neutral-900">Prix EDI</span>
-                            <span class="text-sm text-neutral-500">Équité, Diversité, Inclusion</span>
-                        </div>
-                        <div class="p-4 bg-neutral-50 rounded border-l-4 border-lavia-orange">
-                            <span class="font-semibold block text-neutral-900">Prix Voir Grand</span>
-                            <span class="text-sm text-neutral-500">Conception et vision long terme</span>
-                        </div>
-                        <div class="p-4 bg-neutral-50 rounded border-l-4 border-lavia-orange">
-                            <span class="font-semibold block text-neutral-900">Prix Thématiques</span>
-                            <span class="text-sm text-neutral-500">Pour chaque volet (étudiant / enseignant)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Jury -->
-                <div class="bg-neutral-800 text-white p-8 rounded shadow-sm">
-                    <h3 class="text-xl font-bold mb-6 flex items-center">
-                        <i class="fa-solid fa-gavel text-lavia-orange mr-3"></i> Le jury
-                    </h3>
-                    <ul class="space-y-3 text-sm text-neutral-300">
-                        <li>• Représentants Fédération des cégeps & AQPC</li>
-                        <li>• Cadres des centres de pédagogie universitaire</li>
-                        <li>• Chercheurs & Directeurs académiques</li>
-                        <li>• Spécialistes AWS</li>
-                        <li>• Membres de la communauté étudiante</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Partenaires -->
-    <section id="partenaires" class="py-16 bg-white border-t border-neutral-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-2xl font-bold text-neutral-900 mb-10">Organisateurs et partenaires</h2>
-            
-            <div class="flex flex-wrap justify-center items-center gap-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-                <!-- Logos placeholders (Text for now) -->
-                <div class="text-xl font-bold text-neutral-800">LAVIA</div>
-                <div class="text-xl font-bold text-neutral-800">GRIIPTIC</div>
-                <div class="text-xl font-bold text-neutral-800">AWS</div>
-                <div class="text-xl font-bold text-neutral-800">Université de Montréal</div>
-                <div class="text-xl font-bold text-neutral-800">Université de Sherbrooke</div>
-                <div class="text-xl font-bold text-neutral-800">Fédération des Cégeps</div>
-            </div>
-            
-            <p class="mt-8 text-sm text-neutral-500">
-                D'autres établissements et organisations sont susceptibles de s'ajouter.
-            </p>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="py-20 bg-neutral-50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-neutral-900 section-title mb-10 text-center block">Questions fréquentes</h2>
-            
-            <div class="space-y-4">
-                <details class="group bg-white rounded shadow-sm p-6 cursor-pointer">
-                    <summary class="flex justify-between items-center font-medium text-neutral-900 list-none">
-                        <span>Faut-il savoir coder pour participer ?</span>
-                        <span class="transition group-open:rotate-180">
-                            <i class="fa-solid fa-chevron-down text-lavia-orange"></i>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-4 text-sm leading-relaxed">
-                        Pas nécessairement. Nous encourageons les équipes multidisciplinaires. Les étudiants en éducation, sciences humaines ou multimédia sont essentiels pour le design et la pertinence pédagogique, tandis que les profils techniques (informatique) s'occuperont du code.
-                    </p>
-                </details>
-
-                <details class="group bg-white rounded shadow-sm p-6 cursor-pointer">
-                    <summary class="flex justify-between items-center font-medium text-neutral-900 list-none">
-                        <span>Quels outils seront utilisés ?</span>
-                        <span class="transition group-open:rotate-180">
-                            <i class="fa-solid fa-chevron-down text-lavia-orange"></i>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-4 text-sm leading-relaxed">
-                        AWS est partenaire de l'événement et fournira des environnements, de l'accompagnement et des outils (notamment pour le "vibe coding" et l'IA générative).
-                    </p>
-                </details>
-
-                <details class="group bg-white rounded shadow-sm p-6 cursor-pointer">
-                    <summary class="flex justify-between items-center font-medium text-neutral-900 list-none">
-                        <span>Y aura-t-il un suivi après l'événement ?</span>
-                        <span class="transition group-open:rotate-180">
-                            <i class="fa-solid fa-chevron-down text-lavia-orange"></i>
-                        </span>
-                    </summary>
-                    <p class="text-neutral-600 mt-4 text-sm leading-relaxed">
-                        Oui, les résultats pourraient servir de base à un événement national. Une équipe de tournage sera présente pour documenter les projets et promouvoir les initiatives futures.
-                    </p>
-                </details>
-            </div>
-        </div>
-    </section>
-
+    
     <!-- Footer -->
-    <footer class="bg-neutral-900 border-t border-neutral-800 text-neutral-300 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h3 class="text-white text-lg font-bold mb-4">Hack-IA-thon LAVIA</h3>
-                    <p class="text-sm text-neutral-400">
-                        Innovons ensemble en enseignement supérieur grâce à l’intelligence artificielle générative.
-                    </p>
-                </div>
-                <div>
-                    <h3 class="text-white text-lg font-bold mb-4">Contact</h3>
-                    <ul class="text-sm text-neutral-400 space-y-2">
-                        <li><i class="fa-regular fa-envelope mr-2"></i> contact@lavia-hackathon.ca (Exemple)</li>
-                        <li><i class="fa-solid fa-location-dot mr-2"></i> Campus Brossard, UdeM</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-white text-lg font-bold mb-4">Liens rapides</h3>
-                    <ul class="text-sm text-neutral-400 space-y-2">
-                        <li><a href="#" class="hover:text-lavia-orange transition-colors">Règlement officiel</a></li>
-                        <li><a href="#" class="hover:text-lavia-orange transition-colors">Code de conduite</a></li>
-                        <li><a href="#" class="hover:text-lavia-orange transition-colors">Politique de confidentialité</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-neutral-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-sm text-neutral-500">© 2026 LAVIA. Tous droits réservés.</p>
-                <div class="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="text-neutral-400 hover:text-white transition-colors"><i class="fa-brands fa-linkedin text-xl"></i></a>
-                    <a href="#" class="text-neutral-400 hover:text-white transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
-                    <a href="#" class="text-neutral-400 hover:text-white transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
-                </div>
-            </div>
-        </div>
+    <footer class="bg-neutral-900 border-t border-neutral-800 py-12 text-center" style="background-color: #171717; border-top-color: #262626;">
+        <p class="text-sm text-neutral-500">© 2026 LAVIA. Tous droits réservés.</p>
     </footer>
 
-</body>
-</html>
+</div>
